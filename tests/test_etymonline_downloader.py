@@ -5,9 +5,6 @@
 import unittest
 
 
-
-
-
 class TestEtymonline_downloader(unittest.TestCase):
     """Tests for `etymonline_downloader` package."""
 

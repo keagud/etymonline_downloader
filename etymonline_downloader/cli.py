@@ -1,16 +1,13 @@
 """Console script for etymonline_downloader."""
 
+import argparse
 import sys
 
 
-import argparse
-
 def main():
-
     """Console script for etymonline_downloader."""
-    parser = argparse.ArgumentParser()
+    argparse.ArgumentParser()
     return 0
-
 
 
 if __name__ == "__main__":

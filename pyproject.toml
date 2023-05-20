@@ -23,6 +23,8 @@ packages = [
 
 [tool.poetry.dependencies]
 python = ">=3.8,<4"
+requests = "^2.30.0"
+bs4 = "^0.0.1"
 
 [tool.poetry.group.dev.dependencies]
 coverage = "*"

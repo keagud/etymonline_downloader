@@ -25,13 +25,13 @@ repos:
         entry: ruff
         language: system
         types: [python]
-        args: | 
-          --verbose 
-          --per-file-ignores __init__.py:F401
-          --fix 
-          --exit-non-zero-on-fix
- 
-    -   id: pyright 
+        args:
+            - --verbose
+            - --per-file-ignores=__init__.py:F401
+            - --fix
+            - --exit-non-zero-on-fix
+
+    -   id: pyright
         name: pyright
         entry: pyright
         language: system
