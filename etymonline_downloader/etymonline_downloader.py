@@ -5,7 +5,7 @@ import json
 import re
 from concurrent import futures
 from string import ascii_lowercase
-from typing import FrozenSet, Iterator, NamedTuple
+from typing import AsyncIterator, FrozenSet, Iterator, NamedTuple
 
 import requests
 from bs4 import BeautifulSoup
@@ -62,13 +62,17 @@ def iter_page_words(soup: BeautifulSoup):
         yield WordEntry(name, content, pos)
 
 
-def get_page(url: str, **kwargs) -> BeautifulSoup:
+async def get_page(url: str, **kwargs) -> BeautifulSoup:
     req = requests.get(url, **kwargs)
     req.raise_for_status()
     return BeautifulSoup(req.content, "html.parser")
 
 
-def get_letter_pages_count(soup: BeautifulSoup) -> int:
+async def download_letter_pages(letter: str):
+    pass
+
+
+async def get_letter_pages_count(soup: BeautifulSoup) -> int:
     selected = soup.select("ul.ant-pagination li")
 
     final_page_title = selected[-2].text
@@ -78,8 +82,7 @@ def get_letter_pages_count(soup: BeautifulSoup) -> int:
 
     return int(final_page_title)
 
-
-def iter_letter_pages(letter: str) -> Iterator[BeautifulSoup]:
+async def iter_letter_pages(letter: str) -> AsyncIterator[BeautifulSoup]:
     print(f"Fetching pages for {letter}")
     base_url = "https://www.etymonline.com/search?q="
     index_url = base_url + letter
@@ -87,12 +90,12 @@ def iter_letter_pages(letter: str) -> Iterator[BeautifulSoup]:
 
     numbered_page_url = index_url + "&page={n}"
 
-    pages_count = get_letter_pages_count(soup)
+    pages_count = get_letter_pages_count(await soup)
 
-    pages = [numbered_page_url.format(n=n) for n in range(1, pages_count + 1)]
+    pages = [numbered_page_url.format(n=n) for n in range(1, await pages_count + 1)]
 
     for page in pages:
-        yield get_page(page)
+        yield await get_page(page)
 
 
 def get_letter_words(letter: str):
