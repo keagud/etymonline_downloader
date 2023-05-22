@@ -25,6 +25,7 @@ packages = [
 python = ">=3.8,<4"
 requests = "^2.30.0"
 bs4 = "^0.0.1"
+rich = "^13.3.5"
 
 [tool.poetry.group.dev.dependencies]
 coverage = "*"
