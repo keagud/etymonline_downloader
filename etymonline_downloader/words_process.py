@@ -12,8 +12,9 @@ from pathlib import Path
 from typing import FrozenSet, Iterator, NamedTuple, Optional
 
 from bs4 import BeautifulSoup
-from download_pages import SAVE_DIR
 from rich.progress import track
+
+from .download_pages import SAVE_DIR
 
 
 class WordEntry(NamedTuple):

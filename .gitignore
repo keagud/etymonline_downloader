@@ -3,6 +3,7 @@ local/
 *.db
 pages/*
 pages/
+_test*
 
 # Byte-compiled / optimized / DLL files
 __pycache__/

@@ -15,6 +15,7 @@ from typing import Final, Iterator, NamedTuple
 
 import requests
 from bs4 import BeautifulSoup
+from rich.console import Console
 from rich.progress import Progress, track
 
 SAVE_DIR: Final = Path(__file__).parent.joinpath("pages/")
@@ -205,11 +206,13 @@ def save_all_pages() -> Iterator[DownloadUpdate]:
 
 
 def full_download():
-    fetch_index_pages()
-    index_pages = parse_index_pages_sync()
-    page_counts = {k: get_letter_pages_count(v) for k, v in index_pages.items()}
+    console = Console()
+    with console.status("Getting metadata..."):
+        fetch_index_pages()
+        index_pages = parse_index_pages_sync()
+        page_counts = {k: get_letter_pages_count(v) for k, v in index_pages.items()}
 
-    overall_sum = sum(page_counts.values())
+        overall_sum = sum(page_counts.values())
 
     with Progress() as progress:
         task = progress.add_task(description="Downloading entries", total=overall_sum)
